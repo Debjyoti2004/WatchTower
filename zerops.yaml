@@ -12,7 +12,7 @@ zerops:
       ports:
         - port: 3000
           httpSupport: true
-      start: npx serve . -l 3000 -s
+      start: npx serve frontend/dist -l 3000 -s
 
   - setup: backend
     build:
