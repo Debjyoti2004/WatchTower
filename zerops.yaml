@@ -3,32 +3,28 @@ zerops:
     build:
       base: nodejs@22
       buildCommands:
-        - cd frontend && npm install && npm run build
-      deployFiles: frontend/dist
-      envVariables:
-        VITE_API_URL: ${BACKEND_URL}
+        - cd frontend-react && npm install && npm run build
+      deployFiles: frontend-react/dist
     run:
       base: nodejs@22
       ports:
         - port: 3000
           httpSupport: true
       start: npx serve . -l 3000 -s
+      envVariables:
+        VITE_API_URL: ${BACKEND_URL}
 
   - setup: backend
     build:
       base: nodejs@22
       buildCommands:
-        - cd backend && npm install
-      deployFiles: backend
+        - cd backend-node && npm install
+      deployFiles: backend-node
     run:
       base: nodejs@22
       ports:
         - port: 8000
           httpSupport: true
-      healthCheck:
-        httpGet:
-          port: 8000
-          path: /health
       start: node server.js
       envVariables:
         DATABASE_URL: ${db_connectionString}
@@ -39,15 +35,15 @@ zerops:
         S3_KEY:       ${storage_accessKeyId}
         S3_SECRET:    ${storage_secretAccessKey}
         S3_BUCKET:    ${storage_bucketName}
-        GEMINI_API_KEY: <GEMINI_KEY>
+        GROQ_API_KEY: ${GROQ_API_KEY}
         PORT:         "8000"
 
   - setup: worker
     build:
       base: nodejs@22
       buildCommands:
-        - cd worker && npm install
-      deployFiles: worker
+        - cd worker-node && npm install
+      deployFiles: worker-node
     run:
       base: nodejs@22
       start: echo "worker ready"
@@ -56,4 +52,4 @@ zerops:
           timing: "*/30 * * * * *"
       envVariables:
         DATABASE_URL: ${db_connectionString}
-        NATS_URL:  nats://${nats_hostname}:${nats_port}
+        NATS_URL:     nats://${nats_hostname}:${nats_port}
