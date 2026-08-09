@@ -39,7 +39,7 @@ zerops:
         S3_KEY:         ${storage_accessKeyId}
         S3_SECRET:      ${storage_secretAccessKey}
         S3_BUCKET:      ${storage_bucketName}
-        GEMINI_API_KEY: <PASTE_YOUR_GEMINI_KEY_HERE>
+        GEMINI_API_KEY: ${GEMINI_API_KEY}
         PORT:           "8000"
 
   - setup: worker
