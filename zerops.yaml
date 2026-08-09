@@ -29,7 +29,7 @@ zerops:
         httpGet:
           port: 8000
           path: /health
-      start: node server.js
+      start: node backend/server.js
       envVariables:
         DATABASE_URL:   ${db_connectionString}
         VALKEY_HOST:    ${cache_hostname}
@@ -52,7 +52,7 @@ zerops:
       base: nodejs@22
       start: echo "worker ready"
       crontab:
-        - command: node poll.js
+        - command: node worker/poll.js
           timing: "*/30 * * * * *"
       envVariables:
         DATABASE_URL: ${db_connectionString}
