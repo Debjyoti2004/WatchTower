@@ -19,8 +19,12 @@ const wss    = new WebSocketServer({ server });
 app.use(cors());
 app.use(express.json());
 
-await initDb();
-await seedIfEmpty(PORT);
+app.use(servicesRouter);
+app.use(dashboardRouter);
+app.use(analyzeRouter(broadcast));
+app.use(reportRouter);
+
+server.listen(PORT, () => console.log(`[watchtower] listening on :${PORT}`));
 
 function broadcast(data) {
   const msg = JSON.stringify(data);
@@ -54,10 +58,3 @@ try {
 } catch (e) {
   console.warn("[nats] unavailable:", e.message);
 }
-
-app.use(servicesRouter);
-app.use(dashboardRouter);
-app.use(analyzeRouter(broadcast));
-app.use(reportRouter);
-
-server.listen(PORT, () => console.log(`[watchtower] listening on :${PORT}`));
