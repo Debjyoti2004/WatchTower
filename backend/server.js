@@ -26,6 +26,9 @@ app.use(reportRouter);
 
 server.listen(PORT, () => console.log(`[watchtower] listening on :${PORT}`));
 
+await initDb();
+await seedIfEmpty(PORT);
+
 function broadcast(data) {
   const msg = JSON.stringify(data);
   wss.clients.forEach(ws => { if (ws.readyState === 1) ws.send(msg); });
