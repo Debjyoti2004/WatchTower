@@ -6,6 +6,7 @@ export default function analyzeRouter(broadcast) {
   const router = Router();
 
   router.post("/services/:id/analyze", async (req, res) => {
+    if (!gemini) return res.status(503).json({ error: "GEMINI_API_KEY not configured" });
     const { rows: events } = await pool.query(
       "SELECT * FROM events WHERE service_id=$1 ORDER BY ts DESC LIMIT 20",
       [req.params.id]
