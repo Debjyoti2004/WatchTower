@@ -4,7 +4,19 @@ const { Pool } = pg;
 
 export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-export async function initDb() {
+export async function initDb(retries = 8, delayMs = 3000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await _createTables();
+    } catch (e) {
+      if (i === retries - 1) throw e;
+      console.log(`[db] not ready, retrying in ${delayMs / 1000}s… (${i + 1}/${retries})`);
+      await new Promise(r => setTimeout(r, delayMs));
+    }
+  }
+}
+
+async function _createTables() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS services (
       id            SERIAL PRIMARY KEY,
