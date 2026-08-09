@@ -1,12 +1,3 @@
-# WatchTower — paste this in Zerops GUI → New Project → Import YAML
-# Creates all 7 services in one click
-
-project:
-  name: watchtower
-  tags:
-    - hackathon
-    - monitoring
-
 services:
   - hostname: frontend
     type: nodejs@22
@@ -20,7 +11,7 @@ services:
     type: nodejs@22
 
   - hostname: db
-    type: mongodb@7
+    type: postgresql@16
     mode: NON_HA
 
   - hostname: cache
@@ -34,4 +25,3 @@ services:
   - hostname: storage
     type: object-storage
     objectStorageSize: 2
-    objectStoragePolicy: public

@@ -2,5 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-* { box-sizing: border-box; }
-body { margin: 0; background: #030712; }
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { margin: 0; background: #07070f; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #22223a; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #32324a; }
+
+::selection { background: rgba(16,185,129,0.15); color: #f0f0f8; }

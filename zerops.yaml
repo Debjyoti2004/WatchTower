@@ -31,7 +31,7 @@ zerops:
           path: /health
       start: node server.js
       envVariables:
-        MONGO_URI:    ${db_connectionString}
+        DATABASE_URL: ${db_connectionString}
         VALKEY_HOST:  ${cache_hostname}
         VALKEY_PORT:  ${cache_port}
         NATS_URL:     nats://${nats_hostname}:${nats_port}
@@ -39,7 +39,7 @@ zerops:
         S3_KEY:       ${storage_accessKeyId}
         S3_SECRET:    ${storage_secretAccessKey}
         S3_BUCKET:    ${storage_bucketName}
-        GEMINI_API_KEY: <PASTE_YOUR_GEMINI_KEY_HERE>
+        GEMINI_API_KEY: <GEMINI_KEY>
         PORT:         "8000"
 
   - setup: worker
@@ -55,5 +55,5 @@ zerops:
         - command: node poll.js
           timing: "*/30 * * * * *"
       envVariables:
-        MONGO_URI: ${db_connectionString}
+        DATABASE_URL: ${db_connectionString}
         NATS_URL:  nats://${nats_hostname}:${nats_port}
